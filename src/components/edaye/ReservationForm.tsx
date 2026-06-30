@@ -16,58 +16,31 @@ import {
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { PRESTATION_OPTIONS, CONTACT } from "./data";
+import { PRESTATION_OPTIONS } from "./data";
+import { useWhatsAppReservation, CRENEAU_LABELS } from "@/hooks/useWhatsAppReservation";
 
-type Props = {
+interface ReservationFormProps {
   prefillService?: string | null;
   onSuccess?: () => void;
-};
+}
 
-export function ReservationForm({ prefillService, onSuccess }: Props) {
+export function ReservationForm({ prefillService, onSuccess }: ReservationFormProps) {
   const [prenom, setPrenom] = useState("");
   const [tel, setTel] = useState("");
   const [service, setService] = useState<string>("");
   const [date, setDate] = useState<Date | undefined>();
   const [creneau, setCreneau] = useState<string>("");
   const [msg, setMsg] = useState("");
-  const [done, setDone] = useState(false);
+
+  const { done, submit } = useWhatsAppReservation({ onSuccess });
 
   useEffect(() => {
     if (prefillService) setService(prefillService);
   }, [prefillService]);
 
-  const creneauLabel: Record<string, string> = {
-    matin: "Matin (08h – 12h)",
-    "apres-midi": "Après-midi (14h – 19h)",
-    soir: "Soirée (vendredi & samedi · jusqu'à 21h)",
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    const dateStr = date
-      ? format(date, "EEEE d MMMM yyyy", { locale: fr })
-      : "À définir";
-
-    const lines = [
-      "Bonjour EDAYE 👋, je souhaite réserver un soin.",
-      "",
-      `👤 Prénom : ${prenom}`,
-      `📞 Téléphone : ${tel}`,
-      `💆 Prestation : ${service}`,
-      `📅 Date : ${dateStr}`,
-      `🕐 Créneau : ${creneau ? creneauLabel[creneau] : "Non précisé"}`,
-      ...(msg.trim() ? [`📝 Précisions : ${msg.trim()}`] : []),
-    ];
-
-    const waText = encodeURIComponent(lines.join("\n"));
-    const waNumber = CONTACT.phones[0].tel.replace("+", "");
-    const waUrl = `https://wa.me/${waNumber}?text=${waText}`;
-
-    window.open(waUrl, "_blank", "noreferrer");
-
-    setDone(true);
-    setTimeout(() => onSuccess?.(), 1400);
+    submit({ prenom, tel, service, date, creneau, msg });
   };
 
   if (done) {
@@ -171,9 +144,11 @@ export function ReservationForm({ prefillService, onSuccess }: Props) {
               <SelectValue placeholder="Matin ou après-midi" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="matin">Matin (08h – 12h)</SelectItem>
-              <SelectItem value="apres-midi">Après-midi (14h – 19h)</SelectItem>
-              <SelectItem value="soir">Soirée (vendredi & samedi · jusqu'à 21h)</SelectItem>
+              {Object.entries(CRENEAU_LABELS).map(([value, label]) => (
+                <SelectItem key={value} value={value}>
+                  {label}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>

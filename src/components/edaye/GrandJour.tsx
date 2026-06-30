@@ -15,6 +15,8 @@ export function GrandJour() {
               <img
                 src={bride}
                 alt="Maquillage mariée"
+                width={600}
+                height={560}
                 loading="lazy"
                 decoding="async"
                 className="h-[460px] w-full object-cover sm:h-[560px]"

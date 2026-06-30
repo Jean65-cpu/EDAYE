@@ -1,4 +1,4 @@
-import { MapPin, Phone, Mail } from "lucide-react";
+import { MapPin, Phone, Mail, type LucideIcon } from "lucide-react";
 import { CONTACT } from "./data";
 import { HoursTable } from "./HoursTable";
 import { ReservationForm } from "./ReservationForm";
@@ -65,15 +65,13 @@ export function Contact() {
   );
 }
 
-function ContactRow({
-  icon: Icon,
-  title,
-  children,
-}: {
-  icon: React.ComponentType<{ className?: string }>;
+interface ContactRowProps {
+  icon: LucideIcon;
   title: string;
   children: React.ReactNode;
-}) {
+}
+
+function ContactRow({ icon: Icon, title, children }: ContactRowProps) {
   return (
     <div className="flex items-start gap-4 rounded-2xl border border-border bg-card p-5">
       <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">

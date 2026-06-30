@@ -24,13 +24,14 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import { type Bouquet, CONTACT } from "./data";
+import type { Bouquet } from "@/types";
+import { useWhatsAppReservation } from "@/hooks/useWhatsAppReservation";
 
-type Props = {
+interface BouquetReservationModalProps {
   bouquet: Bouquet | null;
   open: boolean;
   onClose: () => void;
-};
+}
 
 function BouquetSummary({ bouquet }: { bouquet: Bouquet }) {
   const services = bouquet.description.split(" + ");
@@ -74,35 +75,24 @@ function BouquetForm({
   const [date, setDate] = useState<Date | undefined>();
   const [heure, setHeure] = useState("");
   const [msg, setMsg] = useState("");
-  const [done, setDone] = useState(false);
+
+  const { done, submit } = useWhatsAppReservation({
+    successDelay: 1600,
+    onSuccess,
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    const dateStr = date
-      ? format(date, "EEEE d MMMM yyyy", { locale: fr })
-      : "À définir";
-
-    const lines = [
-      `Bonjour EDAYE 👋 Je souhaite réserver le bouquet *${bouquet.name}*.`,
-      "",
-      `🌸 *Bouquet* : ${bouquet.name}`,
-      `💰 *Prix* : ${bouquet.price}`,
-      `✨ *Prestations* : ${bouquet.description}`,
-      "",
-      `👤 *Prénom* : ${prenom}`,
-      `📞 *Téléphone* : ${tel}`,
-      `📅 *Date souhaitée* : ${dateStr}`,
-      `🕐 *Heure* : ${heure || "Non précisée"}`,
-      ...(msg.trim() ? [`📝 *Message* : ${msg.trim()}`] : []),
-    ];
-
-    const waText = encodeURIComponent(lines.join("\n"));
-    const waNumber = CONTACT.phones[0].tel.replace("+", "");
-    window.open(`https://wa.me/${waNumber}?text=${waText}`, "_blank", "noreferrer");
-
-    setDone(true);
-    setTimeout(() => onSuccess(), 1600);
+    submit({
+      prenom,
+      tel,
+      date,
+      msg,
+      bouquetName: bouquet.name,
+      bouquetPrice: bouquet.price,
+      bouquetDescription: bouquet.description,
+      heure,
+    });
   };
 
   if (done) {
@@ -228,7 +218,7 @@ function BouquetForm({
   );
 }
 
-export function BouquetReservationModal({ bouquet, open, onClose }: Props) {
+export function BouquetReservationModal({ bouquet, open, onClose }: BouquetReservationModalProps) {
   if (!bouquet) return null;
 
   return (
@@ -236,9 +226,7 @@ export function BouquetReservationModal({ bouquet, open, onClose }: Props) {
       <DialogContent
         className={cn(
           "max-w-lg overflow-y-auto",
-          // Mobile: full-screen bottom sheet style
           "max-sm:fixed max-sm:inset-x-0 max-sm:bottom-0 max-sm:top-auto max-sm:max-h-[92dvh] max-sm:translate-x-0 max-sm:translate-y-0 max-sm:rounded-b-none max-sm:rounded-t-2xl",
-          // Desktop: centered dialog
           "sm:max-h-[90dvh]",
         )}
       >

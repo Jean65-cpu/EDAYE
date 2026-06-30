@@ -16,7 +16,7 @@ export function Footer() {
             </p>
           </div>
 
-          <nav className="text-sm">
+          <nav aria-label="Navigation secondaire" className="text-sm">
             <p className="text-xs uppercase tracking-wider text-muted-foreground">
               Navigation
             </p>

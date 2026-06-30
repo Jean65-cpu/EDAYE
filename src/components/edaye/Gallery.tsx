@@ -4,11 +4,19 @@ import bride from "@/assets/g-bride.jpg";
 import massage from "@/assets/g-massage.jpg";
 import { SectionHeader } from "./SectionHeader";
 
-const IMAGES = [
-  { src: facial, alt: "Soin visage éclat", className: "row-span-2" },
-  { src: mani, alt: "Manucure raffinée" },
-  { src: bride, alt: "Maquillage mariée" },
-  { src: massage, alt: "Massage relaxant", className: "col-span-2" },
+interface GalleryImage {
+  src: string;
+  alt: string;
+  className?: string;
+  width: number;
+  height: number;
+}
+
+const IMAGES: GalleryImage[] = [
+  { src: facial, alt: "Soin visage éclat", className: "row-span-2", width: 600, height: 480 },
+  { src: mani, alt: "Manucure raffinée", width: 600, height: 240 },
+  { src: bride, alt: "Maquillage mariée", width: 600, height: 240 },
+  { src: massage, alt: "Massage relaxant", className: "col-span-2", width: 1200, height: 240 },
 ];
 
 export function Gallery() {
@@ -31,6 +39,8 @@ export function Gallery() {
               <img
                 src={img.src}
                 alt={img.alt}
+                width={img.width}
+                height={img.height}
                 loading="lazy"
                 decoding="async"
                 className="h-full w-full object-cover grayscale-[15%] transition-all duration-700 group-hover:scale-[1.04] group-hover:grayscale-0"

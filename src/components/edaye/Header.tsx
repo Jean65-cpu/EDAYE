@@ -26,7 +26,7 @@ export function Header() {
             </span>
           </a>
 
-          <nav className="hidden items-center gap-7 text-sm text-muted-foreground md:flex">
+          <nav aria-label="Navigation principale" className="hidden items-center gap-7 text-sm text-muted-foreground md:flex">
             <a href="#bouquets" className="transition-colors hover:text-foreground">Bouquets</a>
             <a href="#prestations" className="transition-colors hover:text-foreground">Prestations</a>
             <a href="#galerie" className="transition-colors hover:text-foreground">Galerie</a>
@@ -36,6 +36,7 @@ export function Header() {
           <Button
             onClick={() => openModal()}
             size="sm"
+            aria-label="Réserver un soin"
             className="h-10 rounded-full px-5 text-sm font-medium shadow-sm"
           >
             Réserver

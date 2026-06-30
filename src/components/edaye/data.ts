@@ -1,4 +1,16 @@
-export const BRAND = {
+import type {
+  BrandInfo,
+  ContactInfo,
+  DayHours,
+  ServiceCategory,
+  Bouquet,
+  BeautyTipData,
+} from "@/types";
+
+// Re-export types for backward compatibility
+export type { DayHours, Service, ServiceCategory, Bouquet } from "@/types";
+
+export const BRAND: BrandInfo = {
   name: "EDAYE",
   full: "EDAYE Institut de Beauté",
   tagline: "Du soin au besoin",
@@ -7,7 +19,7 @@ export const BRAND = {
     "Venez comme vous êtes. Nous prendrons le soin de vous rendre sublime. Vous déborderez de confiance quand on fera ressortir ce charme que vous êtes la seule à détenir.",
 };
 
-export const CONTACT = {
+export const CONTACT: ContactInfo = {
   address:
     "Boulevard Jean Paul II, Hedzranawoé, en face de la nouvelle cité Millénium, 150m de UTB Novissi, Lomé, Togo",
   phones: [
@@ -21,13 +33,6 @@ export const CONTACT = {
   googleReviews: "https://www.google.com/maps/search/EDAYE+Institut+de+Beauté+Lomé+Togo",
 };
 
-export type DayHours = {
-  day: string;
-  hours: string;
-  closed?: boolean;
-  highlight?: boolean;
-};
-
 export const HOURS: DayHours[] = [
   { day: "Lundi", hours: "Fermé", closed: true },
   { day: "Mardi", hours: "08h – 12h · 14h – 19h" },
@@ -37,13 +42,6 @@ export const HOURS: DayHours[] = [
   { day: "Samedi", hours: "08h – 12h · 14h – 21h" },
   { day: "Dimanche", hours: "14h – 19h", highlight: true },
 ];
-
-export type Service = { label: string; price: string };
-export type ServiceCategory = {
-  id: string;
-  title: string;
-  items: Service[];
-};
 
 export const SERVICES: ServiceCategory[] = [
   {
@@ -150,14 +148,6 @@ export const SERVICES: ServiceCategory[] = [
   },
 ];
 
-export type Bouquet = {
-  id: string;
-  name: string;
-  description: string;
-  price: string;
-  recommended?: boolean;
-};
-
 export const BOUQUETS: Bouquet[] = [
   {
     id: "woezon",
@@ -183,7 +173,7 @@ export const BOUQUETS: Bouquet[] = [
 export const WEDDING_TEXT =
   "Nous serons présents pour vous accompagner à cette étape importante de votre vie. Concentrez-vous sur vos invités et laissez-nous nous concentrer sur vous, pour vous rendre cette journée encore plus mémorable.";
 
-export const BEAUTY_TIP = {
+export const BEAUTY_TIP: BeautyTipData = {
   title: "Soigner l'acné avec un légume de votre cuisine : la tomate",
   intro:
     "La tomate est riche en antioxydants : elle aide à réduire l'inflammation et resserre les pores.",
@@ -202,4 +192,4 @@ export const PRESTATION_OPTIONS = [
   "Massage",
   "Épilation",
   "Bouquets de soins",
-];
+] as const;

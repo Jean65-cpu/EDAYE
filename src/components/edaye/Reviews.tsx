@@ -1,7 +1,8 @@
 import { Star } from "lucide-react";
+import type { Review } from "@/types";
 
-// <!-- À REMPLACER PAR DE VRAIS AVIS CLIENTS -->
-const REVIEWS = [
+// TODO: Remplacer par de vrais avis clients
+const REVIEWS: Review[] = [
   {
     name: "Akossiwa M.",
     text: "Un accueil chaleureux et un soin visage qui a vraiment changé ma peau. Je recommande sans hésiter.",
@@ -31,7 +32,7 @@ export function Reviews() {
             </h2>
           </div>
           <div className="flex items-center gap-3 rounded-full border border-border bg-card px-5 py-3">
-            <div className="flex">
+            <div className="flex" role="img" aria-label="Note 4,9 sur 5 étoiles">
               {Array.from({ length: 5 }).map((_, i) => (
                 <Star
                   key={i}
@@ -53,7 +54,7 @@ export function Reviews() {
               key={r.name}
               className="flex flex-col rounded-2xl border border-border bg-card p-6"
             >
-              <div className="mb-3 flex">
+              <div className="mb-3 flex" role="img" aria-label="5 étoiles">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star key={i} className="h-3.5 w-3.5 fill-accent text-accent" strokeWidth={1.5} />
                 ))}

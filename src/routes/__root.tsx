@@ -77,14 +77,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "EDAYE Institut de Beauté — Du soin au besoin | Lomé, Togo" },
+      {
+        name: "description",
+        content:
+          "Institut de beauté à Lomé : coiffure, soins visage, manucure, massage, maquillage mariage. Ouvert le dimanche. Réservez en ligne ou par WhatsApp.",
+      },
+      { name: "author", content: "EDAYE Institut de Beauté" },
+      { property: "og:title", content: "EDAYE Institut de Beauté — Du soin au besoin" },
+      {
+        property: "og:description",
+        content:
+          "Coiffure, soins, maquillage et massages à Lomé. Ouvert le dimanche. Réservez votre rendez-vous.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:site", content: "@edaye_salon" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
